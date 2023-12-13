@@ -22,6 +22,12 @@ public class Spotkanie {
     @Column(name = "data")
     @Type(type = "org.hibernate.type.ZonedDateTimeType")
     public ZonedDateTime data;
+
+    @Column(name = "golegospodarza")
+    public int golegospodarza;
+
+    @Column(name = "golegoscia")
+    public int golegoscia;
     public Spotkanie(){
 
     }
