@@ -25,7 +25,7 @@ public class Endpointy {
         return Baza.pobierzTrener();
     }
 
-    @DeleteMapping("/trenerzy/{id}")
+    @DeleteMapping("/trenerzy/usun/{id}")
     public ResponseEntity<String> usunTrenera(@PathVariable int id){
         try {
             // Wywołaj metodę usuwającą trenera z bazy
@@ -54,7 +54,7 @@ public class Endpointy {
         return Baza.znajdzNajblizszeSpotkanie();
     }
 
-    @PutMapping("/edytuj/{id}")
+    @PutMapping("/trenerzy/edytuj/{id}")
     public ResponseEntity<String> edytujTrenera(@PathVariable int id, @RequestBody Trener trener) {
         try {
             baza.usunTrenera(id);

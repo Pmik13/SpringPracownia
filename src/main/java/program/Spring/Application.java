@@ -17,7 +17,7 @@ public class Application {
 		Druzyna druzyna = new Druzyna(2, "Pogon", "Szczecin");
 		Zawodnik zawodnik = new Zawodnik("Kamil", "Grosicki", druzyna);
 		Trener trener = new Trener("Jens", "Gustavson", druzyna);
-//		baza.dodajTrenera(trener);
+		baza.dodajObiekt(trener);
 //		baza.usunTrenera(2);
 //		baza.znajdzDruzyneZNajwiecejStrzelonychGoli();
 //		baza.pobierzTrenerowStronicowaniem(2);

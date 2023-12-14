@@ -411,5 +411,24 @@ public class Baza {
         return null; // Tutaj możesz zwrócić obiekt Druzyna lub zrobić coś innego z wynikiem
     }
 
+    @Transactional
+    public void dodajObiekt(Object obiekt) {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("hibernate-dynamic");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+        entityManager.getTransaction().begin();
+
+        if (entityManager.contains(obiekt)) {
+            // Obiekt jest już w kontekście trwałym, więc użyj merge
+            System.out.println(obiekt.getClass().getSimpleName() + " znajduje się w bazie");
+        } else {
+            entityManager.merge(obiekt);
+        }
+
+        entityManager.getTransaction().commit();
+
+        entityManager.close();
+        entityManagerFactory.close();
+    }
 
 }
