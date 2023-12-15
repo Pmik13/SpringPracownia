@@ -15,9 +15,8 @@ public class Zawodnik {
     @Column(name = "nazwisko")
     public String nazwisko;
 
-    // Relacja one-to-many z Druzyny
     @ManyToOne
-    @JoinColumn(name = "id_druzyny") // Kolumna w tabeli Zawodnicy, która przechowuje klucz obcy do tabeli Druzyny
+    @JoinColumn(name = "id_druzyny")
     private Druzyna druzyna;
 
 

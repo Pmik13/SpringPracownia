@@ -23,11 +23,11 @@ public class Spotkanie {
     @Type(type = "org.hibernate.type.ZonedDateTimeType")
     public ZonedDateTime data;
 
-    @Column(name = "golegospodarza")
-    public int golegospodarza;
+    @Column(name = "golegospodarza", nullable = true)
+    public Integer golegospodarza;
 
-    @Column(name = "golegoscia")
-    public int golegoscia;
+    @Column(name = "golegoscia", nullable = true)
+    public Integer golegoscia;
     public Spotkanie(){
 
     }

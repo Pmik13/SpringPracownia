@@ -16,7 +16,7 @@ public class Trener {
 
     @OneToOne
     @JoinColumn(name = "id_klubu")
-    private Druzyna druzyna;
+    public Druzyna druzyna;
 
 
     public Trener() {

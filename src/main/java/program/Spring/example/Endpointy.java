@@ -10,28 +10,33 @@ public class Endpointy {
 
     @Autowired
     public Baza baza;
-    @GetMapping("/druzyny")
+    @GetMapping("/druzyny/get")
     public List<Druzyna> getDruzyny(){
-        return Baza.pobierzDruzyny();
+        return Baza.pobierzEncje(Druzyna.class);
+    }
+
+    @GetMapping("/druzyny/najwiecejgoli")
+    public List<Object[]> NajwiecejGoli(){
+        return Baza.najwiecejGoli();
     }
 
     @GetMapping("/spotkania/get")
     public List<Spotkanie> getSpotkania(){
-        return Baza.pobierzSpotkania();
+        return Baza.pobierzEncje(Spotkanie.class);
     }
 
     @GetMapping("/trenerzy/get")
     public List<Trener> getTrenerzy(){
-        return Baza.pobierzTrener();
+        return Baza.pobierzEncje(Trener.class);
     }
 
     @DeleteMapping("/trenerzy/usun/{id}")
     public ResponseEntity<String> usunTrenera(@PathVariable int id){
         try {
-            // Wywołaj metodę usuwającą trenera z bazy
-            System.out.println("cos dizła" + id);
-            baza.usunTrenera(id);
-            return ResponseEntity.ok("Trener został usunięty.");
+            if(baza.usunTrenera(id))
+                return ResponseEntity.ok("Trener został usunięty.");
+            else
+                return ResponseEntity.status(500).body("Brak Trenera o podanym id");
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Wystąpił błąd podczas usuwania trenera.");
         }
@@ -42,7 +47,10 @@ public class Endpointy {
         try {
             System.out.println("Weszlo");
             System.out.println(trener.imie);
-            baza.dodajTrenera(trener);
+            if(!baza.sprawdzenieDanychTrenera(trener)){
+                return ResponseEntity.status(500).body("Złe dane");
+            }
+            baza.dodajObiekt(trener);
             return ResponseEntity.ok("Trener został dodany.");
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Wystąpił błąd podczas dodawania trenera.");
@@ -57,10 +65,14 @@ public class Endpointy {
     @PutMapping("/trenerzy/edytuj/{id}")
     public ResponseEntity<String> edytujTrenera(@PathVariable int id, @RequestBody Trener trener) {
         try {
-            baza.usunTrenera(id);
-            trener.id = id;
-            baza.dodajTrenera(trener);
-            return ResponseEntity.ok("Trener został zaktualizowany.");
+            if(!baza.sprawdzenieDanychTrenera(trener)){
+                return ResponseEntity.status(500).body("Złe dane");
+            }
+            if(baza.edytujTrenera(id, trener)){
+                return ResponseEntity.ok("Trener został zaktualizowany.");
+            }
+            System.out.println(trener.druzyna);
+            return ResponseEntity.status(500).body("Brak Trenera w bazie o podanym id");
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Wystąpił błąd podczas aktualizacji trenera.");
         }
